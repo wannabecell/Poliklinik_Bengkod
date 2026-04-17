@@ -16,34 +16,34 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $admin = User::create([
-            'nama' => 'Dewa Ivan',
-            'alamat' => 'YNKTS',
-            'no_ktp' => '1234567890123456',
-            'no_hp' => '081234567890',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('password123'),
+            'nama' => 'Hafizh',
+            'alamat' => 'BSB Blok C no.18',
+            'no_ktp' => '123567890',
+            'no_hp' => '087774339818',
+            'email' => 'tamamhafiz18@gmail.com',
+            'password' => Hash::make('12345678'),
             'role' => 'admin',
             'no_rm' => Carbon::now()->format('Ym') . '-001'
         ]);
 
         $dokter = User::create([
-            'nama' => 'Dokter Ivan',
-            'alamat' => 'YNKTS',
-            'no_ktp' => '1234567890123457',
-            'no_hp' => '081234567891',
-            'email' => 'dokter@gmail.com',
-            'password' => Hash::make('password123'),
+            'nama' => 'Dokter Tirta',
+            'alamat' => 'Jogja',
+            'no_ktp' => '123567890',
+            'no_hp' => '088214817627',
+            'email' => 'Tirta@gmail.com',
+            'password' => Hash::make('12345678'),
             'role' => 'dokter',
             'no_rm' => Carbon::now()->format('Ym') . '-002'
         ]);
 
         $pasien = User::create([
-            'nama' => 'Pasien',
-            'alamat' => 'YNKTS',
-            'no_ktp' => '1234567890123458',
-            'no_hp' => '081234567892',
+            'nama' => 'Hafiz',
+            'alamat' => 'BSB Blok C no.18',
+            'no_ktp' => '123567890',
+            'no_hp' => '087774339818',
             'email' => 'pasien@gmail.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('12345678'),
             'role' => 'pasien',
             'no_rm' => Carbon::now()->format('Ym') . '-003'
         ]);

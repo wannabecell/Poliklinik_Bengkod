@@ -62,6 +62,36 @@
                 Manajemen Poli
             </a>
 
+            <a href="{{ route('obat.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('obat.*') ? $active : $inactive }}">
+                <i class="fas fa-pills w-4 text-center"></i>
+                Manajemen Obat
+            </a>
+
+            <a href="{{ route('dokter.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('dokter.*') ? $active : $inactive }}">
+                <i class="fas fa-user-doctor w-4 text-center"></i>
+                Manajemen Dokter
+            </a>
+
+            <a href="{{ route('pasiens.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('pasiens.*') ? $active : $inactive }}">
+                <i class="fas fa-users w-4 text-center"></i>
+                Manajemen Pasien
+            </a>
+
+            <a href="{{ route('admin.riwayat.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('admin.riwayat.index') ? $active : $inactive }}">
+                <i class="fas fa-history w-4 text-center"></i>
+                Riwayat Pendaftaran
+            </a>
+
+            <a href="{{ route('admin.pembayaran') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('admin.pembayaran') ? $active : $inactive }}">
+                <i class="fas fa-money-bill-wave w-4 text-center"></i>
+                Validasi Pembayaran
+            </a>
+
         </div>
         @endif
 
@@ -79,6 +109,24 @@
                 class="{{ $baseLink }} {{ request()->routeIs('pasien.dashboard') ? $active : $inactive }}">
                 <i class="fas fa-house-medical w-4 text-center"></i>
                 Dashboard Pasien
+            </a>
+
+            <a href="{{ route('daftar.create') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('daftar.create') ? $active : $inactive }}">
+                <i class="fas fa-stethoscope w-4 text-center"></i>
+                Pendaftaran Poli
+            </a>
+
+            <a href="{{ route('pasien.riwayat') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('pasien.riwayat*') ? $active : $inactive }}">
+                <i class="fas fa-history w-4 text-center"></i>
+                Riwayat Pendaftaran
+            </a>
+
+            <a href="{{ route('pasien.pembayaran') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('pasien.pembayaran') ? $active : $inactive }}">
+                <i class="fas fa-credit-card w-4 text-center"></i>
+                Pembayaran
             </a>
 
 
@@ -99,6 +147,18 @@
                 class="{{ $baseLink }} {{ request()->routeIs('dokter.dashboard') ? $active : $inactive }}">
                 <i class="fas fa-stethoscope w-4 text-center"></i>
                 Dashboard Dokter
+            </a>
+
+            <a href="{{ route('jadwal.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('jadwal.*') ? $active : $inactive }}">
+                <i class="far fa-calendar-alt w-4 text-center"></i>
+                Jadwal Praktik
+            </a>
+
+            <a href="{{ route('periksa.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('periksa.*') ? $active : $inactive }}">
+                <i class="fas fa-stethoscope w-4 text-center"></i>
+                Daftar & Pemeriksaan
             </a>
 
         </div>
