@@ -27,6 +27,7 @@ class PasienController extends Controller
             'no_ktp' => 'required|string|unique:users,no_ktp',
             'no_hp' => 'required|string',
             'no_rm' => 'required|string|unique:users,no_rm',
+            'email' => 'required|string|email|unique:users,email',
         ]);
 
         User::create([
@@ -35,6 +36,7 @@ class PasienController extends Controller
             'no_ktp' => $request->no_ktp,
             'no_hp' => $request->no_hp,
             'no_rm' => $request->no_rm,
+            'email' => $request->email,
             'role' => 'pasien',
             'password' => bcrypt($request->no_hp), // default password
         ]);

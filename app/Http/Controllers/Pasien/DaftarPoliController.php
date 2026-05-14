@@ -14,6 +14,16 @@ class DaftarPoliController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function index()
+    {
+        $riwayats = DaftarPoli::with(['jadwalPeriksa.dokter.poli', 'periksas'])
+                    ->where('id_pasien', Auth::id())
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+        return view('pasien.daftar.index', compact('riwayats'));
+    }
+
     /**
      * Display history of registrations.
      */
