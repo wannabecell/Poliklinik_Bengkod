@@ -63,59 +63,71 @@ class PeriksaController extends Controller
             'obats' => 'nullable|array',
             'obats.*' => 'exists:obat,id',
         ]);
+    $biayaJasa = 150000;
+    $totalBiayaObat = 0;
 
-        return \DB::transaction(function () use ($request) {
-            $biayaJasa = 150000;
-            $totalBiayaObat = 0;
+    // Validasi stok obat
+    if ($request->filled('obats')) {
 
-            if ($request->has('obats')) {
-                $obats = Obat::whereIn('id', $request->obats)->get();
-                
-                // VALIDASI STOK: Cek jika ada obat yang stoknya habis atau kurang
-                foreach ($obats as $obat) {
-                    if ($obat->stok <= 0) {
-                        throw new \Exception("Stok obat '{$obat->nama_obat}' habis. Transaksi dibatalkan.");
-                    }
-                }
+        $obats = Obat::whereIn('id', $request->obats)->get();
 
-                $totalBiayaObat = $obats->sum('harga');
+        foreach ($obats as $obat) {
+            if ($obat->stok <= 0) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', "Stok obat '{$obat->nama_obat}' habis. Silakan pilih obat lain.");
             }
+        }
 
-            try {
-                $biaya_periksa = $biayaJasa + $totalBiayaObat;
+        $totalBiayaObat = $obats->sum('harga');
+    }
 
-                $periksa = Periksa::create([
-                    'id_daftar_poli' => $request->id_daftar_poli,
-                    'tgl_periksa' => $request->tgl_periksa,
-                    'catatan' => $request->catatan,
-                    'biaya_periksa' => $biaya_periksa,
+    \DB::beginTransaction();
+
+    try {
+
+        $biaya_periksa = $biayaJasa + $totalBiayaObat;
+
+        $periksa = Periksa::create([
+            'id_daftar_poli' => $request->id_daftar_poli,
+            'tgl_periksa' => $request->tgl_periksa,
+            'catatan' => $request->catatan,
+            'biaya_periksa' => $biaya_periksa,
+        ]);
+
+        if ($request->filled('obats')) {
+
+            foreach ($request->obats as $id_obat) {
+
+                DetailPeriksa::create([
+                    'id_periksa' => $periksa->id,
+                    'id_obat' => $id_obat,
                 ]);
 
-                if ($request->has('obats')) {
-                    foreach ($request->obats as $id_obat) {
-                        DetailPeriksa::create([
-                            'id_periksa' => $periksa->id,
-                            'id_obat' => $id_obat,
-                        ]);
-
-                        // Reduce stock
-                        $obat = Obat::find($id_obat);
-                        $obat->decrement('stok');
-                    }
-                }
-
-                // BROADCAST: Update antrean secara real-time
-                $currentQueue = $periksa->daftarPoli->no_antrian;
-                $idJadwal = $periksa->daftarPoli->id_jadwal;
-                event(new \App\Events\QueueUpdated($idJadwal, $currentQueue));
-
-                return redirect()->route('periksa.index')->with('success', 'Pemeriksaan selesai. Biaya Rp ' . number_format($biaya_periksa, 0, ',', '.'));
-            } catch (\Exception $e) {
-                // Rollback happens automatically via DB::transaction
-                return redirect()->back()->with('error', $e->getMessage());
+                Obat::find($id_obat)->decrement('stok');
             }
-        });
+        }
+
+        // Broadcast antrean
+        $currentQueue = $periksa->daftarPoli->no_antrian;
+        $idJadwal = $periksa->daftarPoli->id_jadwal;
+
+        event(new \App\Events\QueueUpdated($idJadwal, $currentQueue));
+
+        \DB::commit();
+
+        return redirect()->route('periksa.index')
+            ->with('success', 'Pemeriksaan selesai. Biaya Rp ' . number_format($biaya_periksa, 0, ',', '.'));
+
+    } catch (\Exception $e) {
+
+        \DB::rollBack();
+
+        return redirect()->back()
+            ->withInput()
+            ->with('error', $e->getMessage());
     }
+}
 
 
     /**

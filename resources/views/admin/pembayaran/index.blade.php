@@ -51,12 +51,18 @@
                         </td>
                         <td class="px-6 py-4 text-center">
                             @if($p->bukti_bayar)
-                                <form action="{{ route('admin.payment.validate', $p->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm bg-emerald-500 hover:bg-emerald-600 text-white border-none rounded-lg font-bold uppercase text-[10px] shadow-sm">
-                                        Konfirmasi Lunas
-                                    </button>
-                                </form>
+                            <form action="{{ route('admin.payment.validate', $p->id) }}" method="POST">
+    @csrf
+
+    <button
+        type="submit"
+        class="btn-primary-gradient"
+        style="padding:8px 16px; font-size:12px;">
+        <i class="fas fa-check-circle"></i>
+        Konfirmasi Lunas
+    </button>
+
+</form>
                             @else
                                 <span class="text-slate-300 italic text-[10px]">Menunggu Pasien</span>
                             @endif

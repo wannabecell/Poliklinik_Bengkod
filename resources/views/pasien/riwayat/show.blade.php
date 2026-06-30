@@ -105,9 +105,11 @@
                                 <span class="text-xs font-black uppercase tracking-widest text-green-300">Pembayaran Lunas</span>
                             </div>
                         @else
-                            <a href="{{ route('pasien.pembayaran') }}" class="btn bg-white hover:bg-indigo-50 text-[#2d4499] border-none font-black uppercase rounded-xl">
-                                Bayar Sekarang
-                            </a>
+                        <a href="{{ route('pasien.pembayaran') }}"
+                                 class="btn bg-amber-500 hover:bg-amber-600 text-white border-none font-bold rounded-xl w-full shadow-lg">
+                                <i class="fas fa-credit-card mr-2"></i>
+                                 Bayar Sekarang
+                                </a>
                             <p class="text-[10px] text-center opacity-70 italic">Selesaikan pembayaran & upload bukti untuk validasi admin.</p>
                         @endif
                     </div>

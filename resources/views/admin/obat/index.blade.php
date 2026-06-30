@@ -26,6 +26,25 @@
         <span>{{ session('success') }}</span>
     </div>
     @endif
+    @if($stokHabis->count() > 0)
+<div class="alert alert-danger d-flex align-items-start">
+
+    <i class="fas fa-exclamation-triangle me-3 mt-1"></i>
+
+    <div>
+        <strong>Stok Habis!</strong><br>
+
+        Obat berikut stoknya sudah habis:
+
+        <strong>
+            {{ $stokHabis->pluck('nama_obat')->implode(', ') }}
+        </strong>
+
+        — Segera lakukan penambahan stok.
+    </div>
+
+</div>
+@endif
     
     @if(session('error'))
     <div class="alert alert-error mb-4 rounded-xl shadow-sm">
@@ -68,12 +87,7 @@
                             <td class="px-6 py-4 font-semibold text-indigo-600">
                                 Rp {{ number_format($obat->harga, 0, ',', '.') }}
                             </td>
-
-                            <td class="px-6 py-4">
-                                <span class="badge {{ $obat->stok < 10 ? 'badge-error' : 'badge-ghost' }} font-bold">
-                                    {{ $obat->stok }}
-                                </span>
-                            </td>
+                            <td>{{ $obat->stok }}</td>
 
                             <td class="px-6 py-4 text-right">
                                 <div class="flex justify-end gap-2">

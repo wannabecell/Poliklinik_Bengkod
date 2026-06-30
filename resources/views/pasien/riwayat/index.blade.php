@@ -40,8 +40,9 @@
                                         Detail Pemeriksaan
                                     </a>
                                     @if($p->status_bayar != 'Lunas')
-                                    <a href="{{ route('pasien.pembayaran') }}" class="btn btn-sm bg-indigo-600 hover:bg-indigo-700 text-white border-none rounded-lg">
-                                        Bayar Sekarang
+                                    <a href="{{ route('pasien.pembayaran') }}"
+                                       class="btn btn-success btn-sm fw-semibold px-3">
+                                       <i class="fas fa-wallet me-1"></i> Bayar Sekarang
                                     </a>
                                     @endif
                                 </div>

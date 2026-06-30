@@ -32,7 +32,7 @@ class QueueUpdated implements ShouldBroadcastNow
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function蒸broadcastOn(): array
+    public function broadcastOn(): array
     {
         return [
             new Channel('queue.' . $this->id_jadwal),

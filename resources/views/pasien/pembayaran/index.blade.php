@@ -46,11 +46,26 @@
                                     <a href="{{ asset('storage/' . $p->bukti_bayar) }}" target="_blank" class="text-[10px] text-indigo-500 underline text-center font-bold">Lihat Bukti</a>
                                 </div>
                             @else
-                                <form action="{{ route('pasien.payment.upload', $p->id) }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-2">
-                                    @csrf
-                                    <input type="file" name="bukti_bayar" class="file-input file-input-bordered file-input-xs w-full max-w-xs" required />
-                                    <button type="submit" class="btn btn-xs bg-indigo-600 hover:bg-indigo-700 text-white rounded border-none font-bold uppercase">Upload Bukti</button>
-                                </form>
+                            <form action="{{ route('pasien.payment.upload', $p->id) }}"
+      method="POST"
+      enctype="multipart/form-data">
+
+    @csrf
+
+    <input
+        type="file"
+        name="bukti_bayar"
+        class="file-input file-input-bordered w-full mb-3"
+        required>
+
+    <button
+        type="submit"
+        class="btn-primary-gradient">
+        <i class="fas fa-credit-card"></i>
+        Upload Bukti
+    </button>
+
+</form>
                             @endif
                         </td>
                     </tr>

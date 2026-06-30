@@ -14,7 +14,11 @@ class ObatController extends Controller
     public function index()
     {
         $obats = Obat::all();
-        return view('admin.obat.index', compact('obats'));
+    
+        // Ambil semua obat yang stoknya habis
+        $stokHabis = Obat::where('stok', '<=', 0)->get();
+    
+        return view('admin.obat.index', compact('obats', 'stokHabis'));
     }
 
     /**
@@ -38,7 +42,17 @@ class ObatController extends Controller
         ]);
 
         Obat::create($request->all());
+        if ($obat->stok == 0) {
 
+            return redirect()->route('admin.obat.index')
+                ->with('warning',
+                    "Stok Habis! Obat {$obat->nama_obat} sudah habis. Segera lakukan penambahan stok."
+                );
+        
+        }
+        
+        return redirect()->route('admin.obat.index')
+            ->with('success', 'Data Obat berhasil di-update.');
         return redirect()->route('obat.index')->with('success', 'Data Obat berhasil ditambahkan');
     }
 
